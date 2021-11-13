@@ -4,6 +4,7 @@ const ejs = require('ejs');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const compression = require('compression')
 const mongoose = require('mongoose');
 
 
@@ -27,6 +28,8 @@ app.use(session({
   cookie: {maxAge: 1000 * 60 * 60 * 24},
   resave: false
 }));
+
+app.use(compression());
 app.use(express.static("public"));
 app.use('/',express.json());
 app.use(express.urlencoded({extended:false}));

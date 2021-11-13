@@ -39,7 +39,6 @@ router.get('/items/', async(req,res,next)=>{
         res.status(401).redirect('/');
     }else{
         //const book = await Book.findById(req.params.id);
-        console.log('item route hit');
         const books = await BookItem.find(req.query);
         return res.status(200).render('items', {data:{user,books}})
     };
