@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Books</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/icon.png">
+    <!-- Custom CSS -->
+    <link href="plugins/bower_components/chartist/dist/chartist.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css">
+    <!-- Custom CSS -->
+    <link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Preloader - style you can find in spinners.css -->
+
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+
+    <!-- Main wrapper - style you can find in pages.scss -->
+
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+        data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+        <%- include('partials/header') %> 
+        <%- include('partials/adminAside') %> 
+        <div class="page-wrapper">
+        
+            <!-- Bread crumb and right sidebar toggle -->
+        
+            <div class="page-breadcrumb bg-white">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title text-uppercase"><%= data.filter%> </h4>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>        
+        
+            <!-- Container fluid  -->
+        
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <div class="white-box">
+                            <div class="d-md-flex mb-3">
+                                <h3 class="box-title mb-0">List of all the books</h3>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table no-wrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">#</th>
+                                            <th class="border-top-0">Title</th>
+                                            <th class="border-top-0">Author</th>
+                                            <th class="border-top-0">Category</th>
+                                            <th class="border-top-0">Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% for( let i = 0; i < data.books.length; i++ ) { %>
+                                        <tr>
+                                            <td><%= i + 1 %> </td>
+                                            <td class="txt-oflo"><%= data.books[i].title %> </td>
+                                            <td><%= data.books[i].author %> </td>
+                                            <td class="txt-oflo"><%= data.books[i].category %> </td>
+                                            <td><span class="text-capitalize"><%= data.books[i].quantity %> </span></td>
+                                            <td><form action="/books/items/" method="GET"><input style="display: none;" type="text" name="bookRef" value=<%= data.books[i]._id %>><button type="submit" class="btn btn-primary">View Items</button></form></td>
+                                            <td><form action="/books/deletebook/<%= data.books[i]._id %> " method="POST"><button type="submit" class="btn btn-warning">Delete Book</button></form></td>
+
+                                        </tr>
+                                    <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <%- include('partials/footer') %> 
+    </div>
+    <!-- All Jquery -->
+    <%- include('partials/scripts') %> 
+</body>
+
+</html>

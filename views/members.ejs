@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Members | Library</title>    <!-- Favicon icon -->
+    <base href="/">
+    <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/icon.png">
+    <!-- Custom CSS -->
+   <link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Preloader - style you can find in spinners.css -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+        data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+        <%- include('partials/header') %> 
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <%- include('partials/adminAside') %>
+
+        <div class="page-wrapper">
+            <div class="page-breadcrumb bg-white">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">Library Members</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- Container fluid  -->
+            <div class="container-fluid">
+                <!-- Start Page Content -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="white-box">
+                            <h3 class="box-title">List of Registered Library Members</h3>
+                            <div class="table-responsive">
+                                <table class="table text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">#</th>
+                                            <th class="border-top-0">Full Name</th>
+                                            <th class="border-top-0">Email</th>
+                                            <th class="border-top-0">Role</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="mybooks">
+                                    <% for( let i = 0; i < data.users.length; i++ ) { %>
+                                        <tr>
+                                            <td><%- i + 1 %> </td>
+                                            <td><%= data.users[i].firstName+" "+ data.users[i].lastName %> </td>
+                                            <td><%= data.users[i].email%></td>
+                                            <td><%= (data.users[i].role == 'user')? 'Student': 'Admin' %></td>
+                                            <td style=<%= (data.users[i].role == 'admin')? "display:none":"" %>><form action="/cancel/<%= data.users[i]._id %>" method="POST"><button type="submit" class="btn btn-warning"  >Cancel Membership</button></form></td>
+                                        </tr>
+                                    <% } %>                                     
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%- include('partials/footer') %> 
+        </div>
+    </div>
+    <%- include('partials/scripts') %> 
+</body>
+
+</html>

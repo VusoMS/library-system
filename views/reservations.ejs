@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reservations | Library</title>    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/icon.png">
+    <!-- Custom CSS -->
+   <link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Preloader - style you can find in spinners.css -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+        data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+        <%- include('partials/header') %> 
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <%- include('partials/adminAside') %>
+
+        <div class="page-wrapper">
+            <div class="page-breadcrumb bg-white">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">BOOK RESERVATIONS</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- Container fluid  -->
+            <div class="container-fluid">
+                <!-- Start Page Content -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="white-box">
+                            <h3 class="box-title">Reserved Books</h3>
+                            <div class="table-responsive">
+                                <table class="table text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">#</th>
+                                            <th class="border-top-0">Book Title</th>
+                                            <th class="border-top-0">Reserve Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="mybooks">
+                                    <% for( let i = 0; i < data.reserved.length; i++ ) { %>
+                                        <tr>
+                                            <td><%- i + 1 %> </td>
+                                            <td><%= data.reserved[i].title %> </td>
+                                            <td><%= data.reserved[i].user.reserveDate.toString()%></td>
+                                            <td><form action="/books/issue/<%= data.reserved[i]._id %>" method="POST"><button type="submit" class="btn btn-primary"  >Issue Book</button></form></td>
+                                            <td><form action="/books/cancel/<%= data.reserved[i]._id %>" method="POST"><button type="submit" class="btn btn-warning"  >Cancel Reservation</button></form></td>
+                                        </tr>
+                                    <% } %>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <h3 class="box-title">Issued Books</h3>
+                            <div class="table-responsive">
+                                <table class="table text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">#</th>
+                                            <th class="border-top-0">Book Title</th>
+                                            <th class="border-top-0">Reserve Date</th>
+                                            <th class="border-top-0">Issue Date</th>
+                                            <th class="border-top-0">Due Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for( let i = 0; i < data.issued.length; i++ ) { %>
+                                            <tr>
+                                                <td><%- i+1 %> </td>
+                                                <td><%= data.issued[i].title %> </td>
+                                                <td><%= data.issued[i].user.reserveDate.toString().slice(0,24) %> </td>
+                                                <td><%= data.issued[i].user.issueDate.toString().slice(0,24) %></td>
+                                                <td><%= data.issued[i].user.dueDate.toString().slice(0,16) %></td>
+                                                <td><form action="/books/return/<%= data.issued[i]._id %>" method="POST"><button type="submit" class="btn btn-primary"  >Return Book</button></form></td>
+
+                                            </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%- include('partials/footer') %> 
+        </div>
+    </div>
+    <%- include('partials/scripts') %> 
+</body>
+
+</html>
